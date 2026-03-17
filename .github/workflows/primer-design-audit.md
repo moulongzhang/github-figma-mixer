@@ -109,12 +109,25 @@ mcp-scripts:
     timeout: 120
 
   fetch-primer-tokens:
-    description: "Fetch official Primer design tokens from unpkg CDN. Returns the full primitives JSON with colors, spacing, typography, and border radius values."
+    description: "Fetch official Primer design tokens from unpkg CDN. Returns combined token data including dark theme colors, border radius, typography, and spacing values."
     inputs: {}
     script: |
-      const res = await fetch('https://unpkg.com/@primer/primitives/dist/json/primitives.json');
-      if (!res.ok) return { error: `Failed to fetch Primer tokens: ${res.status}` };
-      return await res.json();
+      const base = 'https://unpkg.com/@primer/primitives@11/dist/docs';
+      const urls = {
+        darkTheme: `${base}/functional/themes/dark.json`,
+        radius: `${base}/functional/size/radius.json`,
+        baseTypography: `${base}/base/typography/typography.json`,
+        functionalTypography: `${base}/functional/typography/typography.json`,
+        baseSize: `${base}/base/size/size.json`,
+        functionalSize: `${base}/functional/size/size.json`,
+      };
+      const result = {};
+      for (const [key, url] of Object.entries(urls)) {
+        const res = await fetch(url);
+        if (!res.ok) { result[key] = { error: `${res.status} ${url}` }; continue; }
+        result[key] = await res.json();
+      }
+      return result;
     timeout: 120
 
 safe-outputs:
@@ -134,13 +147,21 @@ You have custom MCP tools to access the Figma REST API and Primer design tokens.
 
 Call the `fetch-primer-tokens` tool to get official Primer design tokens.
 
+The response is a JSON object with these keys:
+- **darkTheme**: Functional color tokens for the dark theme (fgColor, bgColor, borderColor semantic names and values)
+- **radius**: Border radius tokens (borderRadius-default, borderRadius-small, borderRadius-medium, borderRadius-large, borderRadius-full)
+- **baseTypography**: Base typography tokens (lineHeight, fontSize, fontWeight)
+- **functionalTypography**: Functional typography tokens applied in themes
+- **baseSize**: Base spacing/size primitives (base-size-4, base-size-8, etc.)
+- **functionalSize**: Functional size tokens (spacing, padding, gap)
+
 From the response, build internal reference lists:
 
-- **Allowed color tokens**: fgColor, bgColor, borderColor semantic names and hex values
-- **Allowed border radii**: `base-borderRadius-small` (3px), `base-borderRadius-medium` (6px), `base-borderRadius-large` (12px), `base-borderRadius-full` (9999px)
-- **Allowed font sizes**: from `text.size.*` values
-- **Allowed font weights**: 400, 500, 600
-- **Allowed spacing**: from `size.base.*` values
+- **Allowed color tokens**: Look in `darkTheme` for fgColor, bgColor, borderColor semantic names and their `$value` hex values
+- **Allowed border radii**: Look in `radius` for borderRadius tokens. Common values: 3px (small), 6px (medium/default), 12px (large), 9999px (full)
+- **Allowed font sizes**: Look in `baseTypography` and `functionalTypography` for `fontSize` entries
+- **Allowed font weights**: 400 (normal), 500 (medium), 600 (semibold)
+- **Allowed spacing**: Look in `baseSize` for `base-size-*` values
 
 ## Step 2: Get Figma File Structure
 

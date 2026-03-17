@@ -22,7 +22,7 @@
 # For more information: https://github.github.com/gh-aw/introduction/overview/
 #
 #
-# gh-aw-metadata: {"schema_version":"v2","frontmatter_hash":"2b0e3bf849a0763241498dec191baa83993546d09060707e31f0dbd570b5e7ee","compiler_version":"v0.59.0","strict":true}
+# gh-aw-metadata: {"schema_version":"v2","frontmatter_hash":"67a1e677649be2f781a5e7932ecd9227984c5efca9d7cc8f55ea1511446eedf7","compiler_version":"v0.59.0","strict":true}
 
 name: "Primer Web Design Compliance Audit"
 "on":
@@ -608,7 +608,7 @@ jobs:
             "tools": [
               {
                 "name": "fetch-primer-tokens",
-                "description": "Fetch official Primer design tokens from unpkg CDN. Returns the full primitives JSON with colors, spacing, typography, and border radius values.",
+                "description": "Fetch official Primer design tokens from unpkg CDN. Returns combined token data including dark theme colors, border radius, typography, and spacing values.",
                 "inputSchema": {
                   "properties": {},
                   "type": "object"
@@ -734,9 +734,22 @@ jobs:
         run: |
           cat > /opt/gh-aw/mcp-scripts/fetch-primer-tokens.cjs << 'GH_AW_MCP_SCRIPTS_JS_FETCH-PRIMER-TOKENS_EOF'
             async function execute(inputs) {
-              const res = await fetch('https://unpkg.com/@primer/primitives/dist/json/primitives.json');
-              if (!res.ok) return { error: `Failed to fetch Primer tokens: ${res.status}` };
-              return await res.json();
+              const base = 'https://unpkg.com/@primer/primitives@11/dist/docs';
+              const urls = {
+                darkTheme: `${base}/functional/themes/dark.json`,
+                radius: `${base}/functional/size/radius.json`,
+                baseTypography: `${base}/base/typography/typography.json`,
+                functionalTypography: `${base}/functional/typography/typography.json`,
+                baseSize: `${base}/base/size/size.json`,
+                functionalSize: `${base}/functional/size/size.json`,
+              };
+              const result = {};
+              for (const [key, url] of Object.entries(urls)) {
+                const res = await fetch(url);
+                if (!res.ok) { result[key] = { error: `${res.status} ${url}` }; continue; }
+                result[key] = await res.json();
+              }
+              return result;
             }
             module.exports = { execute };
             if (require.main === module) {
