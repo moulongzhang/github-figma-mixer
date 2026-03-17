@@ -15,6 +15,21 @@
   --color-accent-purple: #bc8cff;
   --color-accent-pink: #f778ba;
   --color-accent-green: #3fb950;
+
+  /* Primer Web typography tokens */
+  --primer-font-size-xs: 10px;
+  --primer-font-size-sm: 12px;
+  --primer-font-size-md: 14px;
+  --primer-font-size-base: 16px;
+  --primer-font-size-lg: 18px;
+  --primer-font-size-xl: 20px;
+  --primer-font-size-2xl: 24px;
+  --primer-font-size-3xl: 32px;
+  --primer-font-size-4xl: 40px;
+  --primer-font-size-5xl: 48px;
+  --primer-font-weight-normal: 400;
+  --primer-font-weight-medium: 500;
+  --primer-font-weight-semibold: 600;
 }
 
 body {

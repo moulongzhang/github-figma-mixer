@@ -37,6 +37,25 @@ const config: Config = {
           "sans-serif",
         ],
       },
+      // Primer Web standard font sizes
+      fontSize: {
+        "primer-xs": "10px",
+        "primer-sm": "12px",
+        "primer-md": "14px",
+        "primer-base": "16px",
+        "primer-lg": "18px",
+        "primer-xl": "20px",
+        "primer-2xl": "24px",
+        "primer-3xl": "32px",
+        "primer-4xl": "40px",
+        "primer-5xl": "48px",
+      },
+      // Primer Web standard font weights
+      fontWeight: {
+        "primer-normal": "400",
+        "primer-medium": "500",
+        "primer-semibold": "600",
+      },
       maxWidth: {
         content: "960px",
       },
