@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --color-bg-canvas: #0d1117;
-  --color-bg-subtle: #161b22;
-  --color-bg-card: #1c2129;
-  --color-border: #30363d;
-  --color-border-subtle: #21262d;
-  --color-text-primary: #e6edf3;
-  --color-text-secondary: #8b949e;
-  --color-text-muted: #6e7681;
+  --color-bg-canvas: #ffffff;
+  --color-bg-subtle: #f9fafb;
+  --color-bg-card: #ffffff;
+  --color-border: #e5e7eb;
+  --color-border-subtle: #e5e7eb;
+  --color-text-primary: #000000;
+  --color-text-secondary: #57606a;
+  --color-text-muted: #57606a;
   --color-accent-blue: #58a6ff;
   --color-accent-purple: #bc8cff;
   --color-accent-pink: #f778ba;
@@ -18,8 +18,8 @@
 }
 
 body {
-  background-color: #0d1117;
-  color: #e6edf3;
+  background-color: #ffffff;
+  color: #000000;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP",
     Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -27,18 +27,10 @@ body {
 }
 
 a {
-  color: #58a6ff;
+  color: inherit;
+  text-decoration: none;
 }
 
 a:hover {
-  text-decoration: underline;
-}
-
-@layer utilities {
-  .text-gradient-brand {
-    background: linear-gradient(135deg, #58a6ff, #bc8cff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+  text-decoration: none;
 }

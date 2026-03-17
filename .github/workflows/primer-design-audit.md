@@ -20,6 +20,7 @@ network:
     - github
     - node
     - "api.figma.com"
+    - "mcp.figma.com"
     - "unpkg.com"
 
 mcp-scripts:
@@ -135,105 +136,109 @@ safe-outputs:
     title-prefix: "[design-audit] "
     labels: [design, primer-web, audit]
     close-older-issues: true
+  assign-to-agent:
+    allowed: [copilot]
+  noop:
 ---
 
-# Primer Web Design Compliance Audit
+# Primer Web デザイン準拠監査
 
-You are a design system compliance auditor. Your job is to check whether the UI components in a Figma design file align with the **Primer Web** design system tokens and component standards.
+あなたはデザインシステム準拠監査員です。Figma デザインファイル内の UI コンポーネントが **Primer Web** デザインシステムのトークンおよびコンポーネント規格に準拠しているかを検査してください。
 
-You have custom MCP tools to access the Figma REST API and Primer design tokens. Use them to perform the audit.
+Figma REST API と Primer デザイントークンにアクセスするためのカスタム MCP ツールが用意されています。これらを使って監査を行ってください。
 
-## Step 1: Get Primer Web Reference Data
+## ステップ 1: Primer Web リファレンスデータの取得
 
-Call the `fetch-primer-tokens` tool to get official Primer design tokens.
+`fetch-primer-tokens` ツールを呼び出して、公式 Primer デザイントークンを取得してください。
 
-The response is a JSON object with these keys:
-- **darkTheme**: Functional color tokens for the dark theme (fgColor, bgColor, borderColor semantic names and values)
-- **radius**: Border radius tokens (borderRadius-default, borderRadius-small, borderRadius-medium, borderRadius-large, borderRadius-full)
-- **baseTypography**: Base typography tokens (lineHeight, fontSize, fontWeight)
-- **functionalTypography**: Functional typography tokens applied in themes
-- **baseSize**: Base spacing/size primitives (base-size-4, base-size-8, etc.)
-- **functionalSize**: Functional size tokens (spacing, padding, gap)
+レスポンスは以下のキーを持つ JSON オブジェクトです:
+- **darkTheme**: ダークテーマの機能的カラートークン（fgColor, bgColor, borderColor のセマンティック名と値）
+- **radius**: ボーダー半径トークン（borderRadius-default, borderRadius-small, borderRadius-medium, borderRadius-large, borderRadius-full）
+- **baseTypography**: 基本タイポグラフィトークン（lineHeight, fontSize, fontWeight）
+- **functionalTypography**: テーマに適用される機能的タイポグラフィトークン
+- **baseSize**: 基本スペーシング/サイズプリミティブ（base-size-4, base-size-8 等）
+- **functionalSize**: 機能的サイズトークン（spacing, padding, gap）
 
-From the response, build internal reference lists:
+レスポンスから以下の内部参照リストを構築してください:
 
-- **Allowed color tokens**: Look in `darkTheme` for fgColor, bgColor, borderColor semantic names and their `$value` hex values
-- **Allowed border radii**: Look in `radius` for borderRadius tokens. Common values: 3px (small), 6px (medium/default), 12px (large), 9999px (full)
-- **Allowed font sizes**: Look in `baseTypography` and `functionalTypography` for `fontSize` entries
-- **Allowed font weights**: 400 (normal), 500 (medium), 600 (semibold)
-- **Allowed spacing**: Look in `baseSize` for `base-size-*` values
+- **許可カラートークン**: `darkTheme` 内の fgColor, bgColor, borderColor のセマンティック名と `$value` 16進値を参照
+- **許可ボーダー半径**: `radius` 内の borderRadius トークンを参照。主な値: 3px（small）、6px（medium/default）、12px（large）、9999px（full）
+- **許可フォントサイズ**: `baseTypography` と `functionalTypography` 内の `fontSize` エントリを参照
+- **許可フォントウェイト**: 400（normal）、500（medium）、600（semibold）
+- **許可スペーシング**: `baseSize` 内の `base-size-*` 値を参照
 
-## Step 2: Get Figma File Structure
+## ステップ 2: Figma ファイル構造の取得
 
-Call `figma-get-file` with:
+`figma-get-file` を以下のパラメータで呼び出してください:
 - `file_key`: `GCvY3Qv8czRgZgvl1dG6lp`
 - `depth`: `2`
 
-Target node: `24939-84755`
+対象ノード: `24939-84755`
 
-Identify frames containing UI components (buttons, inputs, cards, etc.) and note their `node_id` values.
+UI コンポーネント（ボタン、入力フィールド、カード等）を含むフレームを特定し、それぞれの `node_id` を記録してください。
 
-## Step 3: Get Detailed Node Data
+## ステップ 3: 詳細ノードデータの取得
 
-Call `figma-get-nodes` with:
+`figma-get-nodes` を以下のパラメータで呼び出してください:
 - `file_key`: `GCvY3Qv8czRgZgvl1dG6lp`
-- `node_ids`: comma-separated list of identified node IDs (start with `24939-84755`)
+- `node_ids`: 特定したノードIDのカンマ区切りリスト（`24939-84755` から開始）
 
-**Important**: Max 50 node IDs per call. Split into multiple calls if needed.
+**重要**: 1回の呼び出しで最大50ノードIDまで。それ以上の場合は複数回に分割してください。
 
-Also call `figma-get-components` and `figma-get-styles` with the same file_key to get component and style metadata.
+同じ file_key で `figma-get-components` と `figma-get-styles` も呼び出し、コンポーネントとスタイルのメタデータを取得してください。
 
-## Step 4: Violation Detection Rules
+## ステップ 4: 違反検出ルール
 
-### Color Violations
-- Extract `fills[].color` (r,g,b values are 0-1 floats). Convert: `hex = round(r*255), round(g*255), round(b*255)`
-- Compare against Primer allowed color tokens
-- Tolerance: plus or minus 2 per RGB channel is considered matching
-- Flag any color NOT in the Primer palette
+### カラー違反
+- `fills[].color`（r,g,b の値は 0〜1 の浮動小数点）を抽出。変換式: `hex = round(r*255), round(g*255), round(b*255)`
+- Primer 許可カラートークンと比較
+- 許容誤差: RGB チャネルあたり ±2 は一致とみなす
+- Primer パレットに含まれないカラーをフラグ
 
-### Button Component Violations
-Flag as "non-compliant button candidate" if:
-- Node `name` contains "button", "btn", or "ボタン" (case-insensitive), AND
-- `componentId` does NOT reference a Primer Web Figma library component
-  (Primer library file_key reference: `YaYe4UooRm4D07GFZFXZ4T`)
-- If `componentId` cannot be verified, check component name patterns like "Button/Primary", "Button/Secondary"
+### ボタンコンポーネント違反
+以下の条件を満たす場合「非準拠ボタン候補」としてフラグ:
+- ノード `name` に "button"、"btn"、または "ボタン" を含む（大文字小文字不問）、かつ
+- `componentId` が Primer Web Figma ライブラリコンポーネントを参照していない
+  （Primer ライブラリ file_key: `YaYe4UooRm4D07GFZFXZ4T`）
+- `componentId` を検証できない場合は、"Button/Primary"、"Button/Secondary" などのコンポーネント名パターンを確認
 
-### Border Radius Violations
-- If `cornerRadius` is NOT one of: 3px, 6px, 12px, 9999px then it is a violation
+### ボーダー半径違反
+- `cornerRadius` が 3px、6px、12px、9999px のいずれでもない場合は違反
 
-### Typography Violations
-- If `style.fontSize` is NOT in Primer allowed font sizes then it is a violation
-- If `style.fontWeight` is NOT 400, 500, or 600 then it is a violation
+### タイポグラフィ違反
+- `style.fontSize` が Primer 許可フォントサイズに含まれない場合は違反
+- `style.fontWeight` が 400、500、600 のいずれでもない場合は違反
 
-### Unstyle Detection (Direct Values)
-- If a node has NO `styles` property (no Figma styles applied, no component used)
-- AND the node has visual properties (fills, strokes, text) then flag as "hardcoded style"
+### スタイル未適用検出（直接値の検出）
+- ノードに `styles` プロパティがない（Figma スタイル未適用、コンポーネント未使用）
+- かつ、ノードにビジュアルプロパティ（fills, strokes, text）がある場合、「ハードコードされたスタイル」としてフラグ
 
-## Step 5: Create Issue Report
+## ステップ 5: Issue レポートの作成
 
-Create a GitHub issue with the following structure:
+以下の構造で GitHub Issue を作成してください:
 
-### Title
-`Primer Web Design Audit Report`
+### タイトル
+`Primer Web デザイン監査レポート`
 
-### Body Structure
-1. **Summary**: Overall compliance score (X/Y nodes compliant)
-2. **Violation Table**:
+### 本文の構成
+1. **概要**: 全体的な準拠スコア（X/Y ノードが準拠）
+2. **違反テーブル**:
 
-| Node Name | Node ID | Violation Type | Expected | Actual | Severity |
-|-----------|---------|---------------|----------|--------|----------|
+| ノード名 | ノードID | 違反タイプ | 期待値 | 実際の値 | 重大度 |
+|----------|---------|-----------|--------|---------|--------|
 
-3. **Violation Categories**:
-   - 🔴 `critical`: Component not from Primer library
-   - 🟡 `warning`: Color/radius/typography deviation
-   - 🔵 `info`: Improvement suggestion (e.g., better token to use)
+3. **違反カテゴリ**:
+   - 🔴 `重大`: Primer ライブラリ外のコンポーネント
+   - 🟡 `警告`: カラー/半径/タイポグラフィの逸脱
+   - 🔵 `情報`: 改善提案（例: より適切なトークンの推奨）
 
-4. **Recommendations**: Specific remediation steps for each violation type
+4. **推奨事項**: 各違反タイプに対する具体的な修正手順
 
-## Important Notes
+## 重要な注意事項
 
-- Convert Figma color `r,g,b` (0-1 float) to hex by: `Math.round(value * 255)`
-- Color comparison tolerance: plus or minus 2 per RGB channel
-- Max 50 node IDs per Figma API call, paginate if needed
-- If Primer primitives JSON structure differs from expected, adapt parsing accordingly
-- Focus on the target node `24939-84755` and its children
+- Figma カラーの `r,g,b`（0〜1 浮動小数点）は `Math.round(value * 255)` で16進数に変換
+- カラー比較の許容誤差: RGB チャネルあたり ±2
+- Figma API 呼び出しは1回最大50ノードID、必要に応じてページネーション
+- Primer primitives JSON の構造が想定と異なる場合は、パース処理を適応的に調整
+- 対象ノード `24939-84755` とその子ノードに焦点を当てる
+- レポートは日本語で記述すること

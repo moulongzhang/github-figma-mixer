@@ -12,12 +12,10 @@ export default function Home() {
       <Navigation />
       <main>
         <HeroSection />
-        <div className="max-w-content mx-auto px-6">
-          <AgendaSection />
-          <SpeakersSection />
-          <LocationSection />
-          <FAQSection />
-        </div>
+        <AgendaSection />
+        <SpeakersSection />
+        <FAQSection />
+        <LocationSection />
       </main>
       <Footer />
     </>

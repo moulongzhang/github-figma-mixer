@@ -10,16 +10,16 @@ const config: Config = {
     extend: {
       colors: {
         // Background tokens
-        "bg-canvas": "#0d1117",
-        "bg-subtle": "#161b22",
-        "bg-card": "#1c2129",
+        "bg-canvas": "#ffffff",
+        "bg-subtle": "#f9fafb",
+        "bg-card": "#ffffff",
         // Border tokens
-        "border-default": "#30363d",
-        "border-subtle": "#21262d",
+        "border-default": "#e5e7eb",
+        "border-subtle": "#e5e7eb",
         // Text tokens
-        "text-primary": "#e6edf3",
-        "text-secondary": "#8b949e",
-        "text-muted": "#6e7681",
+        "text-primary": "#000000",
+        "text-secondary": "#57606a",
+        "text-muted": "#57606a",
         // Accent tokens
         "accent-blue": "#58a6ff",
         "accent-purple": "#bc8cff",
