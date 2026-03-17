@@ -5,437 +5,558 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GitHub x Figma Mixer</title>
   <style>
-    /* Reset & Base */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --color-bg: #0d1117;
-      --color-bg-subtle: #161b22;
-      --color-bg-card: #1c2129;
-      --color-border: #30363d;
-      --color-border-subtle: #21262d;
-      --color-text-primary: #e6edf3;
-      --color-text-secondary: #8b949e;
-      --color-text-muted: #6e7681;
-      --color-accent-blue: #58a6ff;
-      --color-accent-purple: #bc8cff;
-      --color-accent-pink: #f778ba;
-      --color-accent-green: #3fb950;
-      --color-gradient-start: #58a6ff;
-      --color-gradient-end: #bc8cff;
-    }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', Helvetica, Arial, sans-serif;
-      background-color: var(--color-bg);
-      color: var(--color-text-primary);
+      background-color: #ffffff;
+      color: #000000;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
 
-    a { color: var(--color-accent-blue); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    a { color: inherit; text-decoration: none; }
 
-    /* Hero Section */
-    .hero {
-      position: relative;
-      width: 100%;
-      min-height: 480px;
-      overflow: hidden;
-      display: flex;
-      align-items: flex-end;
+    /* ── Navigation ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
     }
 
-    .hero-image {
-      position: absolute;
-      inset: 0;
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 65px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      color: #57606a;
+    }
+
+    .nav-links a:hover { color: #000000; }
+
+    /* ── Hero ── */
+    .hero-img-wrap {
+      width: 100%;
+      height: 600px;
+      overflow: hidden;
+    }
+
+    .hero-img-wrap img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
+      display: block;
     }
 
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 30%, rgba(13, 17, 23, 0.7) 70%, var(--color-bg) 100%);
+    .hero-band {
+      background: #000000;
+      color: #ffffff;
+      text-align: center;
+      padding: 48px 24px;
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      width: 100%;
+    .hero-band-date {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    .hero-band-venue {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .hero-band-notice {
+      font-size: 16px;
+      opacity: 0.8;
+    }
+
+    .hero-desc-wrap {
+      padding: 64px 16px;
+    }
+
+    .hero-desc {
       max-width: 960px;
       margin: 0 auto;
-      padding: 80px 24px 48px;
+      background: #f3f4f6;
+      padding: 40px;
     }
 
-    .event-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border-radius: 100px;
-      background: rgba(88, 166, 255, 0.15);
-      border: 1px solid rgba(88, 166, 255, 0.3);
-      color: var(--color-accent-blue);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      margin-bottom: 20px;
+    .hero-desc h1 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #000000;
+      line-height: 1.3;
+      margin-bottom: 24px;
     }
 
-    .event-badge svg {
-      width: 16px;
-      height: 16px;
-      fill: currentColor;
-    }
-
-    .hero-title {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
+    .hero-desc p {
+      font-size: 18px;
+      color: #57606a;
       margin-bottom: 16px;
-      background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
 
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      color: var(--color-text-secondary);
-      font-size: 15px;
-    }
+    .hero-desc p:last-child { margin-bottom: 0; }
 
-    .hero-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .hero-meta-item svg {
-      width: 18px;
-      height: 18px;
-      fill: var(--color-text-muted);
-      flex-shrink: 0;
-    }
-
-    /* Container */
+    /* ── Shared container / section ── */
     .container {
       max-width: 960px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 16px;
     }
 
-    /* Section */
-    .section {
-      padding: 48px 0;
+    /* ── Agenda ── */
+    .agenda-section {
+      padding: 64px 0;
+      background: #ffffff;
     }
 
-    .section + .section {
-      border-top: 1px solid var(--color-border-subtle);
-    }
-
-    .section-title {
-      font-size: 1.5rem;
+    .section-heading {
+      font-size: 48px;
       font-weight: 700;
-      margin-bottom: 24px;
-      letter-spacing: -0.01em;
+      color: #000000;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      color: #57606a;
+      margin-bottom: 32px;
+    }
+
+    .agenda-cards {
       display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .section-title svg {
-      width: 24px;
-      height: 24px;
-      fill: var(--color-accent-purple);
-      flex-shrink: 0;
-    }
-
-    /* Agenda */
-    .agenda-list {
-      list-style: none;
-    }
-
-    .agenda-item {
-      display: flex;
+      flex-direction: column;
       gap: 16px;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--color-border-subtle);
-      align-items: flex-start;
     }
 
-    .agenda-item:last-child {
-      border-bottom: none;
+    .agenda-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .agenda-card-body { flex: 1; }
+
+    .agenda-date {
+      font-size: 14px;
+      color: #57606a;
     }
 
     .agenda-time {
-      flex-shrink: 0;
-      width: 140px;
       font-size: 14px;
+      color: #57606a;
+      margin-top: 4px;
+    }
+
+    .agenda-title {
+      font-size: 18px;
       font-weight: 600;
-      color: var(--color-accent-blue);
-      font-variant-numeric: tabular-nums;
-      padding-top: 2px;
+      color: #000000;
+      margin-top: 16px;
     }
 
-    .agenda-content {
-      font-size: 15px;
-      color: var(--color-text-primary);
+    .agenda-speaker-img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-top: 16px;
+      display: block;
     }
 
-    .agenda-item.agenda-header {
-      background: linear-gradient(135deg, rgba(88, 166, 255, 0.08), rgba(188, 140, 255, 0.08));
-      border-radius: 12px;
-      padding: 16px 20px;
-      border: 1px solid rgba(88, 166, 255, 0.15);
-      margin-bottom: 8px;
+    .agenda-icon {
+      flex-shrink: 0;
+      fill: #57606a;
     }
 
-    .agenda-header .agenda-content {
-      font-weight: 700;
-      font-size: 16px;
+    /* ── Speakers ── */
+    .speakers-section {
+      padding: 64px 0;
+      background: #f9fafb;
     }
 
-    /* Timeline dot */
-    .agenda-item:not(.agenda-header) {
-      position: relative;
-      padding-left: 0;
-    }
-
-    /* Speakers */
     .speakers-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
     }
 
     .speaker-card {
-      background: var(--color-bg-card);
-      border: 1px solid var(--color-border);
-      border-radius: 16px;
-      padding: 28px 24px;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .speaker-card:hover {
-      border-color: var(--color-accent-purple);
-      box-shadow: 0 0 0 1px var(--color-accent-purple), 0 8px 24px rgba(0, 0, 0, 0.3);
-    }
-
-    .speaker-avatar {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--color-accent-blue), var(--color-accent-purple));
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 32px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 16px;
+    }
+
+    .speaker-photo {
+      width: 128px;
+      height: 128px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 24px;
     }
 
     .speaker-name {
       font-size: 18px;
       font-weight: 700;
+      color: #000000;
+      text-align: center;
       margin-bottom: 4px;
     }
 
-    .speaker-role {
+    .speaker-role, .speaker-company {
       font-size: 14px;
-      color: var(--color-text-secondary);
-      line-height: 1.5;
-    }
-
-    .speaker-company {
-      font-size: 13px;
-      color: var(--color-text-muted);
-      margin-top: 2px;
-    }
-
-    /* Footer */
-    .footer {
-      padding: 40px 0;
-      border-top: 1px solid var(--color-border-subtle);
+      color: #57606a;
       text-align: center;
     }
 
-    .footer-logos {
+    /* ── FAQ ── */
+    .faq-section {
+      padding: 64px 0;
+      background: #f3f4f6;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .faq-item {}
+
+    .faq-question {
+      font-size: 18px;
+      font-weight: 700;
+      color: #000000;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .faq-answer {
+      font-size: 16px;
+      color: #57606a;
+      line-height: 1.7;
+    }
+
+    /* ── Location ── */
+    .location-section {
+      padding: 64px 0;
+      background: #ffffff;
+    }
+
+    .location-heading-wrap {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .location-heading-wrap h2 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #000000;
+      margin-bottom: 8px;
+    }
+
+    .location-heading-wrap p {
+      font-size: 16px;
+      color: #57606a;
+    }
+
+    .location-map {
+      width: 100%;
+      height: 405px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: #ffffff;
+      border-top: 1px solid #e5e7eb;
+      padding: 48px 0 40px;
+    }
+
+    .footer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 16px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      gap: 24px;
-      margin-bottom: 20px;
     }
 
-    .footer-logo svg {
-      height: 28px;
-      fill: var(--color-text-muted);
-      transition: fill 0.2s;
+    .footer-logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
     }
 
-    .footer-logo:hover svg {
-      fill: var(--color-text-secondary);
+    .footer-logo-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: #000000;
     }
 
-    .footer-text {
-      font-size: 13px;
-      color: var(--color-text-muted);
+    .footer-x-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #000000;
+      margin-bottom: 32px;
+      transition: background 0.2s;
     }
 
-    .footer-x {
-      color: var(--color-text-muted);
-      font-size: 20px;
-      font-weight: 300;
+    .footer-x-btn:hover { background: #333333; }
+
+    .footer-copyright {
+      font-size: 14px;
+      color: #57606a;
     }
 
-    /* Responsive */
+    /* ── Responsive ── */
     @media (max-width: 640px) {
-      .hero {
-        min-height: 360px;
-      }
-
-      .hero-content {
-        padding: 60px 20px 36px;
-      }
-
-      .hero-meta {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .agenda-item {
-        flex-direction: column;
-        gap: 4px;
-      }
-
-      .agenda-time {
-        width: auto;
-      }
-
-      .speakers-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .section {
-        padding: 36px 0;
-      }
-
-      .container {
-        padding: 0 16px;
-      }
+      .hero-img-wrap { height: 320px; }
+      .hero-band-date { font-size: 22px; }
+      .hero-desc { padding: 24px; }
+      .hero-desc h1 { font-size: 26px; }
+      .section-heading { font-size: 36px; }
+      .speakers-grid { grid-template-columns: 1fr; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <img src="cover_full.png" alt="GitHub x Figma Mixer" class="hero-image">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <div class="event-badge">
-        <svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm7-3.25v2.992l2.028.812a.75.75 0 0 1-.557 1.392l-2.5-1A.751.751 0 0 1 7 8.25v-3.5a.75.75 0 0 1 1.5 0Z"/></svg>
-        In-Person Event
-      </div>
-      <h1 class="hero-title">GitHub x Figma Mixer</h1>
-      <div class="hero-meta">
-        <span class="hero-meta-item">
-          <svg viewBox="0 0 16 16"><path d="M4.75 0a.75.75 0 0 1 .75.75V2h5V.75a.75.75 0 0 1 1.5 0V2H14.25A1.75 1.75 0 0 1 16 3.75v10.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25V3.75A1.75 1.75 0 0 1 1.75 2H4V.75A.75.75 0 0 1 4.75 0ZM1.5 6v8.25c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V6Z"/></svg>
-          3月19日（水）
-        </span>
-        <span class="hero-meta-item">
-          <svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm7-3.25v2.992l2.028.812a.75.75 0 0 1-.557 1.392l-2.5-1A.751.751 0 0 1 7 8.25v-3.5a.75.75 0 0 1 1.5 0Z"/></svg>
-          18:30 - 21:00 JST
-        </span>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" aria-label="GitHub">
+        <svg viewBox="0 0 16 16" width="32" height="32" fill="#000000" aria-hidden="true">
+          <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/>
+        </svg>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#agenda">アジェンダ</a></li>
+        <li><a href="#speakers">登壇者</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#location">場所</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="bg-white">
+    <div class="hero-img-wrap">
+      <img src="https://www.figma.com/api/mcp/asset/ff09bf81-5b16-4899-adbf-7d52ac3c1e0c" alt="GitHub + Figma Mixer">
+    </div>
+    <div class="hero-band">
+      <p class="hero-band-date">2026年3月19日木曜</p>
+      <p class="hero-band-venue">SPRING VALLEY BREWERY TOKYO</p>
+      <p class="hero-band-notice">定員に達しましたので受付を終了しました。参加が承認された方には確定Eメールが送られます。</p>
+    </div>
+    <div class="hero-desc-wrap">
+      <div class="hero-desc">
+        <h1>GitHub + Figma Mixer — Spring Merge: Where Code Meets Design</h1>
+        <p>コードとデザインが交わる春の夜、GitHubとFigmaが開催するネットワーキングイベントです。</p>
+        <p>ドリンクを片手に、開発者とデザイナーが垣根を越えてつながるカジュアルなミキサーイベントです。皆さまのご参加をお待ちしています。</p>
       </div>
     </div>
   </section>
 
   <!-- Agenda -->
-  <div class="container">
-    <section class="section">
-      <h2 class="section-title">
-        <svg viewBox="0 0 16 16"><path d="M2 1.75C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v12.5A1.75 1.75 0 0 1 12.25 16h-8.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25ZM4.75 4a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5A.75.75 0 0 1 4.75 4Zm.75 2.25a.75.75 0 0 0 0 1.5h5a.75.75 0 0 0 0-1.5Zm0 3a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 0-1.5Z"/></svg>
-        アジェンダ / Agenda
-      </h2>
-      <ul class="agenda-list">
-        <li class="agenda-item agenda-header">
-          <span class="agenda-time">18:30 – 21:00</span>
-          <span class="agenda-content">GitHub x Figma Mixer</span>
-        </li>
-        <li class="agenda-item">
-          <span class="agenda-time">18:30 – 19:00</span>
-          <span class="agenda-content">受付 / Check In</span>
-        </li>
-        <li class="agenda-item">
-          <span class="agenda-time">19:00 – 19:05</span>
-          <span class="agenda-content">開始のご挨拶 / Opening Remarks</span>
-        </li>
-        <li class="agenda-item">
-          <span class="agenda-time">19:30 – 19:40</span>
-          <span class="agenda-content">FigmaとGitHub Copilotでコードとデザインの意図をつなぐ</span>
-        </li>
-        <li class="agenda-item">
-          <span class="agenda-time">19:50 – 20:00</span>
-          <span class="agenda-content">GitHub最新情報</span>
-        </li>
-        <li class="agenda-item">
-          <span class="agenda-time">20:10 – 20:25</span>
-          <span class="agenda-content">お楽しみイベント</span>
-        </li>
-        <li class="agenda-item">
-          <span class="agenda-time">20:50 – 20:55</span>
-          <span class="agenda-content">クロージング / Closing</span>
-        </li>
-      </ul>
-    </section>
+  <section id="agenda" class="agenda-section">
+    <div class="container">
+      <h2 class="section-heading">アジェンダ</h2>
+      <p class="section-sub">確定次第更新されます。アジェンダは予告なく変更される場合があることをご了承ください。</p>
 
-    <!-- Speakers -->
-    <section class="section">
-      <h2 class="section-title">
-        <svg viewBox="0 0 16 16"><path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4.001 4.001 0 0 0-6.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 4.6 8.048 3.5 3.5 0 0 1 2 5.5ZM5.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Zm5.5 0a.75.75 0 0 1 .75.75 2.25 2.25 0 0 1 0 4.5.75.75 0 0 1 0-1.5.75.75 0 0 0 0-1.5.75.75 0 0 1-.75-.75Zm1.585 6.533a.75.75 0 0 1 .966-.466 3.527 3.527 0 0 1 1.742 1.32.75.75 0 1 1-1.236.848 2.021 2.021 0 0 0-1.006-.758.75.75 0 0 1-.466-.944Z"/></svg>
-        登壇者 / Speakers
-      </h2>
+      <div class="agenda-cards">
+
+        <div class="agenda-card">
+          <div class="agenda-card-body">
+            <p class="agenda-date">3月19日</p>
+            <p class="agenda-time">18:30 - 21:00 JST</p>
+            <p class="agenda-title">GitHub x Figma Mixer</p>
+          </div>
+          <svg class="agenda-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">
+            <path d="M2 1.75C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v12.5A1.75 1.75 0 0 1 12.25 16h-8.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25ZM4.75 4a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5A.75.75 0 0 1 4.75 4Zm.75 2.25a.75.75 0 0 0 0 1.5h5a.75.75 0 0 0 0-1.5Zm0 3a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 0-1.5Z"/>
+          </svg>
+        </div>
+
+        <div class="agenda-card">
+          <div class="agenda-card-body">
+            <p class="agenda-date">3月19日</p>
+            <p class="agenda-time">18:30 - 19:00 JST</p>
+            <p class="agenda-title">受付 / Check In</p>
+          </div>
+          <svg class="agenda-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">
+            <path d="M2 1.75C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v12.5A1.75 1.75 0 0 1 12.25 16h-8.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25ZM4.75 4a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5A.75.75 0 0 1 4.75 4Zm.75 2.25a.75.75 0 0 0 0 1.5h5a.75.75 0 0 0 0-1.5Zm0 3a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 0-1.5Z"/>
+          </svg>
+        </div>
+
+        <div class="agenda-card">
+          <div class="agenda-card-body">
+            <p class="agenda-date">3月19日</p>
+            <p class="agenda-time">19:00 - 19:05 JST</p>
+            <p class="agenda-title">開始のご挨拶 / Opening remarks</p>
+          </div>
+          <svg class="agenda-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">
+            <path d="M2 1.75C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v12.5A1.75 1.75 0 0 1 12.25 16h-8.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25ZM4.75 4a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5A.75.75 0 0 1 4.75 4Zm.75 2.25a.75.75 0 0 0 0 1.5h5a.75.75 0 0 0 0-1.5Zm0 3a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 0-1.5Z"/>
+          </svg>
+        </div>
+
+        <div class="agenda-card">
+          <div class="agenda-card-body">
+            <p class="agenda-date">3月19日</p>
+            <p class="agenda-time">19:30 - 19:40 JST</p>
+            <p class="agenda-title">FigmaとGitHub Copilotでコードとデザインの意図をつなぐ</p>
+            <img class="agenda-speaker-img" src="https://www.figma.com/api/mcp/asset/ff00e395-6120-4ef8-9637-1c75800d1e6f" alt="谷 拓樹">
+          </div>
+          <svg class="agenda-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">
+            <path d="M2 1.75C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v12.5A1.75 1.75 0 0 1 12.25 16h-8.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25ZM4.75 4a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5A.75.75 0 0 1 4.75 4Zm.75 2.25a.75.75 0 0 0 0 1.5h5a.75.75 0 0 0 0-1.5Zm0 3a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 0-1.5Z"/>
+          </svg>
+        </div>
+
+        <div class="agenda-card">
+          <div class="agenda-card-body">
+            <p class="agenda-date">3月19日</p>
+            <p class="agenda-time">19:50 - 20:00 JST</p>
+            <p class="agenda-title">GitHub最新情報</p>
+            <img class="agenda-speaker-img" src="https://www.figma.com/api/mcp/asset/5f56d434-dbb4-4e8f-9b20-10c347d108ef" alt="William Zhang">
+          </div>
+          <svg class="agenda-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">
+            <path d="M2 1.75C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v12.5A1.75 1.75 0 0 1 12.25 16h-8.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25ZM4.75 4a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5A.75.75 0 0 1 4.75 4Zm.75 2.25a.75.75 0 0 0 0 1.5h5a.75.75 0 0 0 0-1.5Zm0 3a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 0-1.5Z"/>
+          </svg>
+        </div>
+
+        <div class="agenda-card">
+          <div class="agenda-card-body">
+            <p class="agenda-date">3月19日</p>
+            <p class="agenda-time">20:10 - 20:25 JST</p>
+            <p class="agenda-title">お楽しみイベント</p>
+          </div>
+          <svg class="agenda-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">
+            <path d="M2 1.75C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v12.5A1.75 1.75 0 0 1 12.25 16h-8.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25ZM4.75 4a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5A.75.75 0 0 1 4.75 4Zm.75 2.25a.75.75 0 0 0 0 1.5h5a.75.75 0 0 0 0-1.5Zm0 3a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 0-1.5Z"/>
+          </svg>
+        </div>
+
+        <div class="agenda-card">
+          <div class="agenda-card-body">
+            <p class="agenda-date">3月19日</p>
+            <p class="agenda-time">20:50 - 20:55 JST</p>
+            <p class="agenda-title">クロージング / Closing</p>
+          </div>
+          <svg class="agenda-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">
+            <path d="M2 1.75C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v12.5A1.75 1.75 0 0 1 12.25 16h-8.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25ZM4.75 4a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5A.75.75 0 0 1 4.75 4Zm.75 2.25a.75.75 0 0 0 0 1.5h5a.75.75 0 0 0 0-1.5Zm0 3a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 0-1.5Z"/>
+          </svg>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Speakers -->
+  <section id="speakers" class="speakers-section">
+    <div class="container">
+      <h2 class="section-heading">登壇者</h2>
+      <p class="section-sub">（敬称略）</p>
+      <p class="section-sub" style="margin-top:-20px;">登壇者は追加が決まり次第、掲載いたします。</p>
+
       <div class="speakers-grid">
         <div class="speaker-card">
-          <div class="speaker-avatar" style="background: linear-gradient(135deg, #f778ba, #bc8cff);">谷</div>
-          <div class="speaker-name">谷 拓樹</div>
-          <div class="speaker-role">Designer Advocate</div>
-          <div class="speaker-company">Figma Japan株式会社</div>
+          <img class="speaker-photo" src="https://www.figma.com/api/mcp/asset/ff00e395-6120-4ef8-9637-1c75800d1e6f" alt="谷 拓樹">
+          <p class="speaker-name">谷 拓樹</p>
+          <p class="speaker-role">Designer Advocate</p>
+          <p class="speaker-company">Figma Japan株式会社</p>
         </div>
         <div class="speaker-card">
-          <div class="speaker-avatar" style="background: linear-gradient(135deg, #58a6ff, #3fb950);">W</div>
-          <div class="speaker-name">William Zhang</div>
-          <div class="speaker-role">Solutions Engineer</div>
-          <div class="speaker-company">GitHub</div>
+          <img class="speaker-photo" src="https://www.figma.com/api/mcp/asset/5f56d434-dbb4-4e8f-9b20-10c347d108ef" alt="William Zhang">
+          <p class="speaker-name">William Zhang</p>
+          <p class="speaker-role">SE</p>
+          <p class="speaker-company">GitHub</p>
         </div>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq-section">
+    <div class="container">
+      <h2 class="section-heading">FAQ</h2>
+      <div class="faq-grid" style="margin-top:48px;">
+        <div class="faq-item">
+          <p class="faq-question">このイベントの目的は何ですか？</p>
+          <p class="faq-answer">GitHub × Figma Mixerは、エンジニアとデザイナーが職種の垣根を越えてつながることを目的としたネットワーキングイベントです。GitHubとFigmaにより、コードとデザインの融合をテーマに、参加者同士のカジュアルな交流の場を提供します。</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-question">本イベントの参加資格は何ですか？</p>
+          <p class="faq-answer">本イベントは招待制です。参加をご希望の方は御社担当のGitHub営業までお問い合わせください。</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-question">参加登録はどのような流れですか？</p>
+          <p class="faq-answer">本ウェブサイトの「参加登録依頼」フォームに記入して送信してください。送信したのみでは参加は確定していません。参加確定された方には確定Eメールと当日のチェックインに必要なQRコードをお送りします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location -->
+  <section id="location" class="location-section">
+    <div class="container">
+      <div class="location-heading-wrap">
+        <h2>SPRING VALLEY BREWERY TOKYO</h2>
+        <p>〒150-0034 東京都渋谷区代官山町１３−１ ログロード代官山</p>
+      </div>
+      <img class="location-map" src="https://www.figma.com/api/mcp/asset/e5fdd6b7-bf9e-488d-a2ac-2da73cedb292" alt="Map to SPRING VALLEY BREWERY TOKYO">
+    </div>
+  </section>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-logos">
-        <!-- GitHub Logo -->
-        <a href="https://github.com" class="footer-logo" aria-label="GitHub">
-          <svg viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"/></svg>
-        </a>
-        <span class="footer-x">&times;</span>
-        <!-- Figma Logo -->
-        <a href="https://figma.com" class="footer-logo" aria-label="Figma">
-          <svg viewBox="0 0 38 57" xmlns="http://www.w3.org/2000/svg"><path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 0 1-19 0z"/><path d="M19 0v19h9.5a9.5 9.5 0 0 0 0-19H19z"/><path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg>
-        </a>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo-wrap">
+        <svg viewBox="0 0 16 16" width="32" height="32" fill="#000000" aria-hidden="true">
+          <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/>
+        </svg>
+        <span class="footer-logo-name">GitHub</span>
       </div>
-      <p class="footer-text">&copy; 2025 GitHub x Figma Mixer. All rights reserved.</p>
+      <a href="https://x.com/github" target="_blank" rel="noopener noreferrer" aria-label="GitHub on X" class="footer-x-btn">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#ffffff" aria-hidden="true">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </a>
+      <p class="footer-copyright">&copy; 2026 GitHub Inc. All rights reserved.</p>
     </div>
   </footer>
 
