@@ -28,10 +28,10 @@ const config: Config = {
       },
       fontFamily: {
         sans: [
+          "'Noto Sans JP'",
           "-apple-system",
           "BlinkMacSystemFont",
           "'Segoe UI'",
-          "'Noto Sans JP'",
           "Helvetica",
           "Arial",
           "sans-serif",
