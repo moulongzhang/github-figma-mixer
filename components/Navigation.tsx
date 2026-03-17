@@ -46,27 +46,21 @@ export default function Navigation() {
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="メニューを開く"
         >
-          <span
-            className={`block h-0.5 w-5 bg-text-secondary transition-transform ${menuOpen ? "translate-y-2 rotate-45" : ""}`}
-          />
-          <span
-            className={`block h-0.5 w-5 bg-text-secondary transition-opacity ${menuOpen ? "opacity-0" : ""}`}
-          />
-          <span
-            className={`block h-0.5 w-5 bg-text-secondary transition-transform ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`}
-          />
+          <span className={`block h-0.5 w-5 bg-[#57606a] transition-transform ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
+          <span className={`block h-0.5 w-5 bg-[#57606a] transition-opacity ${menuOpen ? "opacity-0" : ""}`} />
+          <span className={`block h-0.5 w-5 bg-[#57606a] transition-transform ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
         </button>
       </div>
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-border-subtle bg-bg-canvas px-6 py-4">
+        <div className="md:hidden border-t border-[#e5e7eb] bg-white px-6 py-4">
           <ul className="flex flex-col gap-4 list-none m-0 p-0">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="text-sm text-text-secondary hover:text-text-primary transition-colors no-underline hover:no-underline"
+                  className="text-sm text-[#57606a] hover:text-black transition-colors"
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.label}
