@@ -1,9 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "export",
+  basePath: "/github-figma-mixer",
   reactCompiler: true,
-  serverExternalPackages: ["@github/copilot-sdk", "vscode-jsonrpc"],
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
