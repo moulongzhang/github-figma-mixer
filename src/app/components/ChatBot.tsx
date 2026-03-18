@@ -47,7 +47,7 @@ function SendIcon() {
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
       <path
         d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13"
-        stroke="#57606a"
+        stroke="#59636e"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -237,7 +237,7 @@ export default function ChatBot() {
     <div className="fixed bottom-6 right-6 z-[100]">
       {/* Chat Window */}
       {isOpen && (
-        <div className="mb-3 flex w-[340px] flex-col overflow-hidden rounded-lg border border-[#d1d9e0] bg-white shadow-[0px_8px_30px_0px_rgba(0,0,0,0.12)]">
+        <div className="mb-3 flex w-[328px] flex-col overflow-hidden rounded-lg border border-[#d1d9e0] bg-white shadow-[0px_8px_30px_0px_rgba(0,0,0,0.12)]">
           {/* Header */}
           <div className="flex items-center gap-3 border-b border-[#d1d9e0] bg-white px-4">
             <div className="flex h-7 w-7 items-center justify-center rounded bg-[#1f883d] text-white">
@@ -322,7 +322,7 @@ export default function ChatBot() {
           </div>
 
           {/* Input Area */}
-          <div className="border-t border-[#d1d9e0] bg-white px-3 pt-3 pb-2">
+          <div className="border-t border-[#d1d9e0] bg-white px-3 pt-[13px] pb-2">
             <form
               onSubmit={handleSubmit}
               className="flex items-center gap-2 rounded-[6px] border border-[#d1d9e0] bg-white px-3 py-1.5"
