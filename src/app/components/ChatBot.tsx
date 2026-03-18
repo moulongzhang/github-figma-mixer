@@ -102,11 +102,11 @@ function TypingIndicator() {
   return (
     <div className="flex items-center gap-1 px-3 py-2">
       <div className="flex gap-1">
-        <span className="inline-block h-[6px] w-[6px] animate-bounce rounded-full bg-[#57606a] [animation-delay:0ms]" />
-        <span className="inline-block h-[6px] w-[6px] animate-bounce rounded-full bg-[#57606a] [animation-delay:150ms]" />
-        <span className="inline-block h-[6px] w-[6px] animate-bounce rounded-full bg-[#57606a] [animation-delay:300ms]" />
+        <span className="inline-block h-[6px] w-[6px] animate-bounce rounded-full bg-[#59636e] [animation-delay:0ms]" />
+        <span className="inline-block h-[6px] w-[6px] animate-bounce rounded-full bg-[#59636e] [animation-delay:150ms]" />
+        <span className="inline-block h-[6px] w-[6px] animate-bounce rounded-full bg-[#59636e] [animation-delay:300ms]" />
       </div>
-      <span className="ml-1 text-xs text-[#57606a]">入力中...</span>
+      <span className="ml-1 text-xs text-[#59636e]">入力中...</span>
     </div>
   );
 }
@@ -239,7 +239,7 @@ export default function ChatBot() {
       {isOpen && (
         <div className="mb-3 flex w-[340px] flex-col overflow-hidden rounded-lg border border-[#d1d9e0] bg-white shadow-[0px_8px_30px_0px_rgba(0,0,0,0.12)]">
           {/* Header */}
-          <div className="flex items-center gap-3 border-b border-[#d1d9e0] bg-white px-4 py-3">
+          <div className="flex items-center gap-3 border-b border-[#d1d9e0] bg-white px-4">
             <div className="flex h-7 w-7 items-center justify-center rounded bg-[#1f883d] text-white">
               <CopilotIcon size={14} />
             </div>
@@ -276,7 +276,7 @@ export default function ChatBot() {
                     <button
                       key={action}
                       onClick={() => handleQuickAction(action)}
-                      className="rounded-md border border-[#d1d9e0] bg-white px-3 py-2 text-left text-xs text-[#010409] hover:bg-[#f6f8fa] transition-colors"
+                      className="rounded-[6px] border border-[#d1d9e0] bg-white px-3 py-2 text-left text-xs text-[#010409] hover:bg-[#f6f8fa] transition-colors"
                     >
                       {action}
                     </button>
@@ -325,7 +325,7 @@ export default function ChatBot() {
           <div className="border-t border-[#d1d9e0] bg-white px-3 pt-3 pb-2">
             <form
               onSubmit={handleSubmit}
-              className="flex items-center gap-2 rounded-md border border-[#d1d9e0] bg-white px-3 py-1.5"
+              className="flex items-center gap-2 rounded-[6px] border border-[#d1d9e0] bg-white px-3 py-1.5"
             >
               <input
                 ref={inputRef}
@@ -345,7 +345,7 @@ export default function ChatBot() {
                 <SendIcon />
               </button>
             </form>
-            <p className="mt-2 text-center text-xs text-[#59636e] opacity-70">
+            <p className="mt-2 text-center text-xs text-[#59636e]">
               Powered by GitHub Copilot
             </p>
           </div>
@@ -355,7 +355,7 @@ export default function ChatBot() {
       {/* Floating Action Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="ml-auto flex h-10 w-10 items-center justify-center rounded-md bg-[#1f883d] shadow-[0px_1px_0px_0px_rgba(31,35,40,0.04)] transition-transform hover:scale-105"
+        className={`ml-auto flex h-10 w-10 items-center justify-center rounded-[6px] shadow-[0px_1px_0px_0px_rgba(31,35,40,0.04)] transition-transform hover:scale-105 ${isOpen ? "bg-[#f6f8fa]" : "bg-[#1f883d]"}`}
         aria-label={isOpen ? "チャットを閉じる" : "チャットを開く"}
       >
         {isOpen ? (
