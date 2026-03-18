@@ -91,7 +91,7 @@ interface Message {
 
 **Tailwind patterns**:
 - Fixed positioning: `fixed bottom-6 right-6 z-[100]`
-- Chat window: `w-[328px]`, `h-[400px]` scrollable message area
+- Chat window: `w-[327px]`, `h-[400px]` scrollable message area
 - User messages: green bubble `bg-[#1f883d] text-white`
 - Assistant messages: bordered white bubble `border border-[#d1d9e0] bg-white`
 
