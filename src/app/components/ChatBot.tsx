@@ -33,7 +33,7 @@ function CloseIcon() {
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
       <path
         d="M13.5 4.5L4.5 13.5M4.5 4.5L13.5 13.5"
-        stroke="#57606a"
+        stroke="#25292e"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -244,14 +244,14 @@ export default function ChatBot() {
               <CopilotIcon size={14} />
             </div>
             <div className="flex-1">
-              <p className="text-sm font-semibold text-[#010409]">
+              <p className="text-base font-semibold text-[#010409]">
                 イベントアシスタント
               </p>
               <p className="text-xs text-[#bf3989]">● オンライン</p>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="flex h-10 w-10 items-center justify-center rounded-md hover:bg-[#f6f8fa] transition-colors"
+              className="flex h-10 w-10 items-center justify-center rounded-md bg-[#f6f8fa] transition-colors"
               aria-label="チャットを閉じる"
             >
               <CloseIcon />
