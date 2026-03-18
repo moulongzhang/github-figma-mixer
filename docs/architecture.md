@@ -58,7 +58,7 @@ The `out/` directory is deployed to **GitHub Pages** via a GitHub Actions workfl
 2. It runs `npm ci && npm run build` to generate static files.
 3. The `out/` directory is uploaded as a GitHub Pages artifact and deployed.
 
-The site is served at `https://<owner>.github.io/github-figma-mixer/`.
+The site is served at `https://moulongzhang.github.io/github-figma-mixer/`.
 
 ## Key Architectural Decisions
 
