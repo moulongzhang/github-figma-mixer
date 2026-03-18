@@ -1,4 +1,5 @@
 import Image from "next/image";
+import ChatBot from "./components/ChatBot";
 
 const heroImage =
   "https://www.figma.com/api/mcp/asset/67f33af7-96af-4cb2-8fcd-8b8eedbec74e";
@@ -329,6 +330,9 @@ export default function Home() {
           </p>
         </div>
       </footer>
+
+      {/* Copilot ChatBot */}
+      <ChatBot />
     </div>
   );
 }
