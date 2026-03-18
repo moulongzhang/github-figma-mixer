@@ -237,7 +237,7 @@ export default function ChatBot() {
     <div className="fixed bottom-6 right-6 z-[100]">
       {/* Chat Window */}
       {isOpen && (
-        <div className="mb-3 flex w-[328px] flex-col overflow-hidden rounded-lg border border-[#d1d9e0] bg-white shadow-[0px_8px_30px_0px_rgba(0,0,0,0.12)]">
+        <div className="mb-3 flex w-[327px] flex-col overflow-hidden rounded-lg border border-[#d1d9e0] bg-white shadow-[0px_8px_30px_0px_rgba(0,0,0,0.12)]">
           {/* Header */}
           <div className="flex items-center gap-3 border-b border-[#d1d9e0] bg-white px-4">
             <div className="flex h-7 w-7 items-center justify-center rounded bg-[#1f883d] text-white">
@@ -249,17 +249,11 @@ export default function ChatBot() {
               </p>
               <p className="text-xs text-[#bf3989]">● オンライン</p>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="flex h-10 w-10 items-center justify-center rounded-md bg-[#f6f8fa] transition-colors"
-              aria-label="チャットを閉じる"
-            >
-              <CloseIcon />
-            </button>
+
           </div>
 
           {/* Messages Area */}
-          <div className="flex h-[400px] flex-col overflow-y-auto bg-[#f6f8fa] px-4 py-4">
+          <div className="flex h-[400px] flex-col overflow-y-auto bg-[#f6f8fa] px-4 pt-4">
             {showWelcome ? (
               <div className="flex flex-1 flex-col items-center justify-center">
                 <div className="flex h-12 w-12 items-center justify-center rounded-[24px] bg-[#818b98] text-white">
@@ -296,10 +290,10 @@ export default function ChatBot() {
                       </div>
                     )}
                     <div
-                      className={`max-w-[75%] rounded-lg px-3 py-2 text-sm leading-relaxed ${
+                      className={`max-w-[75%] rounded-lg text-sm leading-relaxed ${
                         msg.role === "user"
-                          ? "bg-[#1f883d] text-white"
-                          : "border border-[#d1d9e0] bg-white text-[#010409]"
+                          ? "bg-[#1f883d] text-white px-3 py-2"
+                          : "border border-[#d1d9e0] bg-white text-[#010409] px-[13px] pt-[9px] pb-[1px]"
                       }`}
                     >
                       {msg.content}
@@ -325,7 +319,7 @@ export default function ChatBot() {
           <div className="border-t border-[#d1d9e0] bg-white px-3 pt-[13px] pb-2">
             <form
               onSubmit={handleSubmit}
-              className="flex items-center gap-2 rounded-[6px] border border-[#d1d9e0] bg-white px-3 py-1.5"
+              className="flex items-center gap-2 rounded-[6px] border border-[#d1d9e0] bg-white px-3 py-2"
             >
               <input
                 ref={inputRef}
