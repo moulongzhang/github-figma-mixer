@@ -262,7 +262,7 @@ export default function ChatBot() {
           <div className="flex h-[400px] flex-col overflow-y-auto bg-[#f6f8fa] px-4 py-4">
             {showWelcome ? (
               <div className="flex flex-1 flex-col items-center justify-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#818b98] text-white">
+                <div className="flex h-12 w-12 items-center justify-center rounded-[24px] bg-[#818b98] text-white">
                   <CopilotIcon size={24} />
                 </div>
                 <p className="mt-4 text-base font-semibold text-[#010409]">
