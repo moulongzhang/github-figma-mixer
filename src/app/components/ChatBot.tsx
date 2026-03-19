@@ -247,7 +247,7 @@ export default function ChatBot() {
               <p className="text-base font-semibold text-[#010409]">
                 イベントアシスタント
               </p>
-              <p className="text-xs text-[#bf3989]">● オンライン</p>
+              <p className="text-xs text-[#1f883d]">● オンライン</p>
             </div>
 
           </div>
