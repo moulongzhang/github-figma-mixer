@@ -104,7 +104,8 @@ interface Message {
 
 | Color | Hex Value | Usage |
 |-------|-----------|-------|
-| Primary green | `#1f883d` | Header avatar background, user message bubbles, send button icon background, FAB button (closed state), status indicator ("● オンライン") |
+| Primary green | `#1f883d` | Header avatar background, user message bubbles, send button icon background, FAB button (closed state) |
+| Status indicator | `#bf3989` | Online status indicator ("● オンライン") |
 | Dark text | `#010409` | Header title, user/bot message text, quick action button text |
 | Secondary text gray | `#59636e` | Subtitle text, "入力中..." label, "Powered by GitHub Copilot" text, typing indicator dots |
 | Border gray | `#d1d9e0` | Chat window border, header/input area borders, message bubble borders, input field border, quick action button borders |
