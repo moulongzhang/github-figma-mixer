@@ -31,6 +31,17 @@ The default export. Renders the full event landing page as a single scroll-able 
 
 **Props**: None (no props — this is a page component).
 
+**Color palette**:
+
+| Color name | Hex/RGBA value | Usage description |
+|------------|---------------|-------------------|
+| White | `#ffffff` / `bg-white` | Page background, nav bar, agenda cards, speaker cards |
+| Black | `#000000` / `bg-black` | Date & venue banner background |
+| Light gray background | `#f3f4f6` | Event description section background |
+| Off-white background | `#f9fafb` | Speakers section background |
+| Border gray | `#e5e7eb` | Nav bottom border, agenda card borders, speaker card borders, footer top border |
+| Secondary text gray | `#57606a` | Nav link text, event description text, agenda date/time text, speaker role/company text, FAQ answer text, footer copyright text |
+
 ---
 
 ## `ChatBot` — AI Event Assistant Widget
@@ -103,7 +114,7 @@ interface Message {
 | Shadow (window) | `rgba(0,0,0,0.12)` | Chat window drop shadow |
 | Shadow (FAB) | `rgba(31,35,40,0.04)` | Floating action button shadow |
 | Icon stroke (close) | `#25292e` | Close icon SVG stroke |
-| Icon stroke (send) | `#57606a` | Send icon SVG stroke |
+| Icon stroke (send) | `#59636e` | Send icon SVG stroke |
 
 **Tailwind patterns**:
 - Fixed positioning: `fixed bottom-6 right-6 z-[100]`
@@ -145,3 +156,9 @@ Next.js App Router root layout. Wraps all pages in the HTML document shell.
 A small 20×20 calendar SVG icon rendered in each agenda card.
 
 **Props**: None.
+
+**Color palette**:
+
+| Color name | Hex value | Usage description |
+|------------|-----------|-------------------|
+| Icon stroke gray | `#57606a` | All SVG strokes (calendar outline, divider line, tick marks) |
