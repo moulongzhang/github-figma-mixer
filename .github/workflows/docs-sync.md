@@ -95,6 +95,7 @@ Document each React component:
 - Props interface (if any) with types and descriptions
 - Key behaviors and state management
 - Dependencies on external services or APIs
+- **Color palette**: For each component, list **every** hex color and rgba value used in the source code. Present as a table with columns: Color name, Hex/RGBA value, Usage description. Extract colors from Tailwind arbitrary values (e.g. `bg-[#1f883d]`), inline styles, and SVG attributes (e.g. `stroke="#25292e"`). This is critical for design consistency tracking.
 - Tailwind CSS patterns used
 
 ### `docs/configuration.md`

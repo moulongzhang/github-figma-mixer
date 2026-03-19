@@ -89,6 +89,22 @@ interface Message {
 | `ChatIcon` | Sparkle/star SVG icon for the FAB |
 | `TypingIndicator` | Animated three-dot typing indicator |
 
+**Color palette**:
+
+| Color | Hex Value | Usage |
+|-------|-----------|-------|
+| Primary green | `#1f883d` | Header avatar background, user message bubbles, send button icon background, FAB button (closed state), status indicator ("● オンライン") |
+| Dark text | `#010409` | Header title, user/bot message text, quick action button text |
+| Secondary text gray | `#59636e` | Subtitle text, "入力中..." label, "Powered by GitHub Copilot" text, typing indicator dots |
+| Border gray | `#d1d9e0` | Chat window border, header/input area borders, message bubble borders, input field border, quick action button borders |
+| Light background | `#f6f8fa` | Message area background, quick action hover state, FAB button (open state) |
+| Welcome avatar gray | `#818b98` | Welcome section Copilot avatar background |
+| Input placeholder | `rgba(1,4,9,0.5)` | Input field placeholder text |
+| Shadow (window) | `rgba(0,0,0,0.12)` | Chat window drop shadow |
+| Shadow (FAB) | `rgba(31,35,40,0.04)` | Floating action button shadow |
+| Icon stroke (close) | `#25292e` | Close icon SVG stroke |
+| Icon stroke (send) | `#57606a` | Send icon SVG stroke |
+
 **Tailwind patterns**:
 - Fixed positioning: `fixed bottom-6 right-6 z-[100]`
 - Chat window: `w-[327px]`, `h-[400px]` scrollable message area
